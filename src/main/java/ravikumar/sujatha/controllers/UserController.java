@@ -2,10 +2,7 @@ package ravikumar.sujatha.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ravikumar.sujatha.domain.User;
 import ravikumar.sujatha.repository.UserRepository;
 
@@ -14,24 +11,24 @@ import ravikumar.sujatha.repository.UserRepository;
  */
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8100")
+//@CrossOrigin(origins = "http://localhost:8100")
 public class UserController {
 
     @Autowired
     UserRepository repo;
 
     @RequestMapping(value = "/createuser", method = RequestMethod.POST)
-    public String createUser (User user) {
+    public @ResponseBody String createUser (@RequestBody User user) {
         try {
             repo.saveAndFlush(user);
         } catch (DataIntegrityViolationException e) {
-            return "Error! User already exists.";
+            return "{\"message\": \"Error! User already exists.\"}";
         }
-        return "Success!";
+        return "{\"message\":\"Success!\"}";
     }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public User authenticateUser (User user) {
+    public @ResponseBody User authenticateUser (@RequestBody User user) {
         User userToValidate = repo.findByUsername(user.getUsername());
         if (userToValidate.getPassword().equals(user.getPassword())) {
             return userToValidate;

@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8100")
+//@CrossOrigin(origins = "http://localhost:8100")
 public class BudgetController {
 
 
