@@ -11,14 +11,14 @@ import ravikumar.sujatha.repository.UserRepository;
  */
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(origins = "http://localhost:8100")
 public class UserController {
 
     @Autowired
     UserRepository repo;
 
     @RequestMapping(value = "/createuser", method = RequestMethod.POST)
-    public @ResponseBody String createUser (@RequestBody User user) {
+    public String createUser (@RequestBody User user) {
         try {
             repo.saveAndFlush(user);
         } catch (DataIntegrityViolationException e) {
@@ -28,14 +28,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public @ResponseBody User authenticateUser (@RequestBody User user) {
+    public String authenticateUser (@RequestBody User user) {
         User userToValidate = repo.findByUsername(user.getUsername());
-        if (userToValidate.getPassword().equals(user.getPassword())) {
-            return userToValidate;
+        if (userToValidate != null && userToValidate.getPassword().equals(user.getPassword())) {
+            return "{\"message\":\"Success!\"}";
         } else {
-            return null;
+            return "{\"message\": \"Error! Inccorect credentials.\"}";
         }
 
     }
-
 }

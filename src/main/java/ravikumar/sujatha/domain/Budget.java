@@ -35,8 +35,9 @@ public class Budget {
     private short entertainment;
     private short entertainmentBudgetSpent;
 
-
     public Budget () {}
+
+
 
 
     public void setId(Long id) {
