@@ -15,7 +15,12 @@ import ravikumar.sujatha.repository.UserRepository;
 public class UserController {
 
     @Autowired
-    UserRepository repo;
+    private UserRepository repo;
+
+    public UserRepository getRepo () {
+        return repo;
+    }
+
 
     @RequestMapping(value = "/createuser", method = RequestMethod.POST)
     public String createUser (@RequestBody User user) {

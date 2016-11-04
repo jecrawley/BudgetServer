@@ -16,7 +16,13 @@ public class BudgetController {
 
 
     @Autowired
-    BudgetRepository repo;
+    private BudgetRepository repo;
+
+    public BudgetRepository getRepo () {
+        return repo;
+    }
+
+
 
     @RequestMapping(value = "/allbudgets", method = RequestMethod.GET)
     public Iterable<Budget> getAllBudgets () {
